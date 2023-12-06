@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Tooplate">
+
+    <title>ALLIANZ PNB</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="{% static 'AdminInfo/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'AdminInfo/css/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'AdminInfo/css/apexcharts.css' %}" rel="stylesheet">
+    <link href="{% static 'AdminInfo/css/tooplate-mini-finance.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="home/images/allianzlogo1.png" />
+</head>
+
+<body>
+<br><br>
+                 
+                    <div>
+                      {% block content %}
+                       <center><h1>TO DO LIST</h1></center> 
+                          <table class="account-table table">
+                            <form method="post" action="{% url 'index' %}">
+                              {% csrf_token %}
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Age</th>
+                                  <th>Date and Time</th>
+                                  <th>Task</th>
+                                  <th>Action</th>
+                                  <th></th>
+                                </tr>
+                              {% if not form.instance.id %}
+                                <tr>
+                                  <td><input class="form-control" type="text" name="name" id="name" placeholder="Lester Caibal"></td>
+                                  <td><input class="form-control" type="number" name="value" id="value" placeholder="19"></td>
+                                  <td><input class="form-control" type="datetime-local" name="datetime_field" id="datetime_field"></td>
+                                  <td><textarea class="form-control" type="text" name="comments" id="comments" placeholder="Enter task"></textarea></td>
+                                   <td><button class="btn btn-success" name="save" value="{{ todolist.id }}">Save</button></td>
+                                </tr>
+                              {% endif %}
+                              {% for todolist in todolists %}
+                                <tr>
+                              {% if form.instance.id == todolist.id %}
+                              {% include 'save.html' %}
+                              {% else %}
+                                  <td>{{ todolist.name }}</td>
+                                  <td>{{ todolist.value }}</td>
+                                  <td>{{ todolist.datetime_field }}</td>
+                                  <td>{{ todolist.comments }}</td>
+                                  <td>
+                                   <button class="btn btn-primary" formnovalidate name="edit" value="{{ todolist.id }}">Edit</button> </td>
+                                   <td><button class="btn btn-danger" formnovalidate name="delete" value="{{ todolist.id }}">Delete</button>
+                                  </td>
+                              {% endif %}
+                                </tr>
+                              {% endfor %}
+                            </form>
+                          </table>
+                              {% endblock %}
+                    </div>
+                  </div>
+
+<!-- JAVASCRIPT FILES -->
+<script src="{% static 'AdminInfo/js/jquery.min.js' %}"></script>
+<script src="{% static 'AdminInfo/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'AdminInfo/js/apexcharts.min.js' %}"></script>
+<script src="{% static 'AdminInfo/js/custom.js' %}"></script>
+
+</body>
+
+</html>
