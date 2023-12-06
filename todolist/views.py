@@ -9,25 +9,57 @@ def index(request):
     context['todolists'] = todolists
     context['title'] = 'Home'
     if request.method == 'POST':
-        if 'save' in request.POST:
-            pk = request.POST.get('save')
-            if not pk:
-                form = TodolistForm(request.POST)
-            else:
+            if 'save' in request.POST:
+              
+                pk = request.POST.get('save')
+                if not pk:
+                    form = TodolistForm(request.POST)
+                else:
+                    todolist = Todolist.objects.get(id=pk)
+                    form = TodolistForm(request.POST, instance=todolist)
+            if form.is_valid():
+                form.save()
+                form = TodolistForm()
+            elif 'delete' in request.POST:
+                pk = request.POST.get('delete')
                 todolist = Todolist.objects.get(id=pk)
-                form = TodolistForm(request.POST, instance=todolist)
-            form.save()
-            form = TodolistForm()
-        elif 'delete' in request.POST:
-            pk = request.POST.get('delete')
-            todolist = Todolist.objects.get(id=pk)
-            todolist.delete()
-        elif 'edit' in request.POST:
-            pk = request.POST.get('edit')
-            todolist = Todolist.objects.get(id=pk)
-            form = TodolistForm(instance=todolist)
+                todolist.delete()
+            elif 'edit' in request.POST:
+                pk = request.POST.get('edit')
+                todolist = Todolist.objects.get(id=pk)
+                form = TodolistForm(instance=todolist)
     context['form'] = form
     return render(request, 'index.html', context)
+
+def signup(request):
+    context = {}
+    form = TodolistForm()
+    todolists = Todolist.objects.all()
+    context['todolists'] = todolists
+    context['title'] = 'Home'
+    if request.method == 'POST':
+            if 'save' in request.POST:
+              
+                pk = request.POST.get('save')
+                if not pk:
+                    form = TodolistForm(request.POST)
+                else:
+                    todolist = Todolist.objects.get(id=pk)
+                    form = TodolistForm(request.POST, instance=todolist)
+            if form.is_valid():
+                form.save()
+                form = TodolistForm()
+            elif 'delete' in request.POST:
+                pk = request.POST.get('delete')
+                todolist = Todolist.objects.get(id=pk)
+                todolist.delete()
+            elif 'edit' in request.POST:
+                pk = request.POST.get('edit')
+                todolist = Todolist.objects.get(id=pk)
+                form = TodolistForm(instance=todolist)
+    context['form'] = form
+    return render(request, 'signup.html', context)
+
 
 def about(request):
     context = {}

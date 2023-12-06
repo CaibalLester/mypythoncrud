@@ -575,7 +575,7 @@ strong {
   position: relative;
   overflow: hidden;
   margin-bottom: 90px;
-
+  margin-left: 40%;
   padding: 30px;
 }
 
@@ -590,7 +590,7 @@ strong {
   background: var(--custom-btn-bg-color);
   background: #ff0000;
   border-radius: 100%;
-  width: 100px;
+  width: 200px;
   height: 200px;
   position: absolute;
   top: -65px;
